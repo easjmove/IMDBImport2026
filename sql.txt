@@ -1,0 +1,35 @@
+CREATE TABLE [dbo].[Titles](
+	[TConst] [int] NOT NULL,
+	[TitleType] [varchar](12) NOT NULL,
+	[PrimaryTitle] [varchar](200) NOT NULL,
+	[OriginalTitle] [varchar](200) NOT NULL,
+	[IsAdult] [bit] NOT NULL,
+	[StartYear] [smallint] NULL,
+	[EndYear] [smallint] NULL,
+	[RuntimeMinutes] [int] NULL,
+ CONSTRAINT [PK_Titles] PRIMARY KEY CLUSTERED 
+(
+	[TConst] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Title_Genres](
+	[TConst] [int] NOT NULL,
+	[Genre] [varchar](20) NOT NULL,
+ CONSTRAINT [PK_Title_Genres] PRIMARY KEY CLUSTERED 
+(
+	[TConst] ASC,
+	[Genre] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Title_Genres]  WITH CHECK ADD  CONSTRAINT [FK_Title_Genres_Titles] FOREIGN KEY([TConst])
+REFERENCES [dbo].[Titles] ([TConst])
+GO
+
+ALTER TABLE [dbo].[Title_Genres] CHECK CONSTRAINT [FK_Title_Genres_Titles]
+GO
+
+
