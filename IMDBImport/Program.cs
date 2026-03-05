@@ -22,17 +22,20 @@ foreach (string movie in File.ReadLines("C:/temp/title.basics.tsv").Skip(1).Take
     }
 }
 
-foreach (Title_Model movie in movies)
-{
-    Console.WriteLine(movie);
-}
+//foreach (Title_Model movie in movies)
+//{
+//    Console.WriteLine(movie);
+//}
 
 stopwatch.Stop();
 Console.WriteLine("Elapsed milliseconds to read from file: " + stopwatch.ElapsedMilliseconds);
 
 stopwatch.Start();
 
-NormalInserter inserter = new NormalInserter();
+//IInserter inserter = new NormalInserter();
+//IInserter inserter = new PreparedInserter();
+IInserter inserter = new BulkInserter();
+
 SqlConnection sqlConn = new SqlConnection(
     "Server=localhost;Database=IMDB;Integrated security=True;" +
     "Trusted_Connection=True;TrustServerCertificate=True;");
@@ -40,5 +43,6 @@ sqlConn.Open();
 inserter.InsertTitles(movies, sqlConn);
 
 sqlConn.Close();
-stopwatch.Stop(); // 4413 milconds for 10000 records, 4.4 seconds
+stopwatch.Stop(); // 3800 milconds for 10000 records, 4.4 seconds
+// 2800 for prepared
 Console.WriteLine("Elapsed milliseconds to Insert Data: " + stopwatch.ElapsedMilliseconds);

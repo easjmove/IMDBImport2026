@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IMDBImport
 {
-    public class NormalInserter
+    public class NormalInserter : IInserter
     {
 
         public void InsertTitles(List<Title_Model> titles, SqlConnection sqlConn)
@@ -45,7 +45,7 @@ namespace IMDBImport
                 }
             }
 
-            
+
         }
         private string ConvertIntToString(int? value)
         {
